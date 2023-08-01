@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,9 +40,98 @@ public class Function {
         option = scanner.nextInt();
 
         switch (option){
-            case 1 -> System.out.println("Cadastrar");
-            case 2 -> System.out.println("Buscar");
-            case 3 -> System.out.println("Editar");
+            case 1 -> {
+                System.out.print("Insira o nome do cliente: ");
+                String nomeCliente = scanner.next();
+                System.out.print("Insira a quantidade de endereços do cliente: ");
+                int quantEnderecos = scanner.nextInt();
+                List<Endereco> enderecoList = new ArrayList<>();
+
+                for (int i = 0; i < quantEnderecos; i++) {
+                    System.out.println("Endereço " + (i + 1));
+                    System.out.print("\tInsira o nome da rua: ");
+                    String rua = scanner.next();
+                    System.out.print("\tInsira o número da residência: ");
+                    int numero = scanner.nextInt();
+                    enderecoList.add(new Endereco(rua, numero));
+                }
+                clienteList.add(new Cliente(nomeCliente, enderecoList));
+            }
+            case 2 -> {
+                if (clienteList.isEmpty()){
+                    System.out.println("Ainda não existem clientes cadastrados no sistema");
+                } else {
+                    System.out.print("Insira o nome do cliente que deseja buscar: ");
+                    String nomeCliente = scanner.next();
+
+                    for (int i = 0; i < clienteList.size(); i++) {
+                        if (clienteList.get(i).getNome().equals(nomeCliente)) {
+                            System.out.println("Nome: " + clienteList.get(i).getNome());
+
+                            List<Endereco> enderecoList = clienteList.get(i).getEndereco();
+                            System.out.println("\tEndereços");
+                            for (Endereco endereco : enderecoList) {
+                                System.out.print("Rua " + endereco.getRua() + ", " + endereco.getNumero() + "\n");
+                            }
+                        } else {
+                            System.out.println("Não existem clientes cadastrados com esse nome");
+                        }
+                    }
+                }
+            }
+            case 3 -> {
+                if (clienteList.isEmpty()){
+                    System.out.println("Ainda não existem clientes cadastrados no sistema");
+                } else {
+                    System.out.print("Insira o nome do cliente que deseja editar: ");
+                    String nomeCliente = scanner.next();
+
+                    for (int i = 0; i < clienteList.size(); i++) {
+                        if (nomeCliente.equals(clienteList.get(i).getNome())) {
+                            System.out.println("1 - Nome");
+                            System.out.println("2 - Endereço(s)");
+                            System.out.print("Selecione quais dados deseja editar: ");
+                            int optionEditar = scanner.nextInt();
+
+                            switch (optionEditar) {
+                                case 1 -> {
+                                    System.out.println("\tEdição de NOME");
+
+                                    System.out.println("Insira o novo nome do cliente");
+                                    String novoNome = scanner.next();
+
+                                    clienteList.get(i).setNome(novoNome);
+
+                                    System.out.println("Sucesso!");
+                                }
+
+                                case 2 -> {
+                                    System.out.println("\tEdição de ENDEREÇO(S)");
+
+                                    for (int j = 0; j < clienteList.get(i).getEndereco().size(); j++) {
+                                        System.out.println("\t" + (j + 1) + " - Rua " + clienteList.get(i).getEndereco().get(j).getRua() + ", " + clienteList.get(i).getEndereco().get(j).getNumero());
+                                    }
+                                    System.out.print("Selecione qual endereço gostaria de editar: ");
+                                    int endereco = scanner.nextInt();
+
+                                    System.out.print("Insira o novo nome da rua: ");
+                                    String rua = scanner.next();
+
+                                    System.out.print("Insira o novo número da residência");
+                                    int numero = scanner.nextInt();
+
+                                    clienteList.get(i).getEndereco().get(endereco - 1).setRua(rua);
+                                    clienteList.get(i).getEndereco().get(endereco - 1).setNumero(numero);
+
+                                    System.out.println("Sucesso!");
+                                }
+                            }
+                        } else {
+                            System.out.println("Não existem clientes cadastrados com esse nome");
+                        }
+                    }
+                }
+            }
             case 4 -> System.out.println("Voltar");
             default -> System.out.println("\nOpção inválida, tente novamente\n");
         }
