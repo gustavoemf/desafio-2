@@ -23,7 +23,7 @@ public class Function {
                 System.out.print("\nSaindo...\n");
                 System.exit(0);
             }
-            default -> System.out.println("\nOpção inválida, tente novamente\n");
+            default -> System.out.println("\nOpção inválida, tente novamente");
         }
 
         return option;
@@ -59,35 +59,35 @@ public class Function {
             }
             case 2 -> {
                 if (clienteList.isEmpty()){
-                    System.out.println("\nAinda não existem clientes cadastrados no sistema\n");
+                    System.out.println("\nAinda não existem clientes cadastrados no sistema");
                 } else {
                     System.out.print("\nInsira o nome do cliente que deseja buscar: ");
                     String nomeCliente = scanner.next();
 
-                    for (int i = 0; i < clienteList.size(); i++) {
-                        if (clienteList.get(i).getNome().equals(nomeCliente)) {
-                            System.out.println("\nNome: " + clienteList.get(i).getNome());
+                    for (Cliente cliente : clienteList) {
+                        if (cliente.getNome().equals(nomeCliente)) {
+                            System.out.println("\nNome: " + cliente.getNome());
 
-                            List<Endereco> enderecoList = clienteList.get(i).getEndereco();
+                            List<Endereco> enderecoList = cliente.getEndereco();
                             System.out.println("Endereços:");
                             for (Endereco endereco : enderecoList) {
                                 System.out.print("\tRua " + endereco.getRua() + ", " + endereco.getNumero() + "\n");
                             }
                         } else {
-                            System.out.println("Não existem clientes cadastrados com esse nome");
+                            System.out.println("\nNão existem clientes cadastrados com esse nome");
                         }
                     }
                 }
             }
             case 3 -> {
                 if (clienteList.isEmpty()){
-                    System.out.println("\nAinda não existem clientes cadastrados no sistema\n");
+                    System.out.println("\nAinda não existem clientes cadastrados no sistema");
                 } else {
                     System.out.print("\nInsira o nome do cliente que deseja editar: ");
                     String nomeCliente = scanner.next();
 
-                    for (int i = 0; i < clienteList.size(); i++) {
-                        if (nomeCliente.equals(clienteList.get(i).getNome())) {
+                    for (Cliente cliente : clienteList) {
+                        if (nomeCliente.equals(cliente.getNome())) {
                             System.out.println("1 - Nome");
                             System.out.println("2 - Endereço(s)");
                             System.out.print("Selecione quais dados deseja editar: ");
@@ -100,7 +100,7 @@ public class Function {
                                     System.out.print("Insira o novo nome do cliente: ");
                                     String novoNome = scanner.next();
 
-                                    clienteList.get(i).setNome(novoNome);
+                                    cliente.setNome(novoNome);
 
                                     System.out.println("Sucesso!");
                                 }
@@ -108,14 +108,14 @@ public class Function {
                                 case 2 -> {
                                     System.out.println("\n\tEdição de ENDEREÇO(S)");
 
-                                    for (int j = 0; j < clienteList.get(i).getEndereco().size(); j++) {
-                                        System.out.println("\t" + (j + 1) + " - Rua " + clienteList.get(i).getEndereco().get(j).getRua() + ", " + clienteList.get(i).getEndereco().get(j).getNumero());
+                                    for (int j = 0; j < cliente.getEndereco().size(); j++) {
+                                        System.out.println("\t" + (j + 1) + " - Rua " + cliente.getEndereco().get(j).getRua() + ", " + cliente.getEndereco().get(j).getNumero());
                                     }
                                     System.out.print("\nSelecione qual endereço gostaria de editar: ");
                                     int endereco = scanner.nextInt();
 
-                                    if (endereco < 1 || endereco > clienteList.get(i).getEndereco().size()) {
-                                        System.out.println("Endereço selecionado inválido, tente novamente");
+                                    if (endereco < 1 || endereco > cliente.getEndereco().size()) {
+                                        System.out.println("\nEndereço selecionado inválido, tente novamente");
                                     } else {
                                         System.out.print("Insira o novo nome da rua: ");
                                         String rua = scanner.next();
@@ -123,21 +123,21 @@ public class Function {
                                         System.out.print("Insira o novo número da residência: ");
                                         int numero = scanner.nextInt();
 
-                                        clienteList.get(i).getEndereco().get(endereco - 1).setRua(rua);1
-                                        clienteList.get(i).getEndereco().get(endereco - 1).setNumero(numero);
+                                        cliente.getEndereco().get(endereco - 1).setRua(rua);
+                                        cliente.getEndereco().get(endereco - 1).setNumero(numero);
 
                                         System.out.println("Sucesso!");
                                     }
                                 }
                             }
                         } else {
-                            System.out.println("\n\nNão existem clientes cadastrados com esse nome\n");
+                            System.out.println("\nNão existem clientes cadastrados com esse nome");
                         }
                     }
                 }
             }
             case 4 -> {}
-            default -> System.out.println("\nOpção inválida, tente novamente\n");
+            default -> System.out.println("\nOpção inválida, tente novamente");
         }
     }
     public static void menuPedido(List<Cliente> clienteList, List<Pedido> pedidoList){
@@ -150,10 +150,48 @@ public class Function {
         option = scanner.nextInt();
 
         switch (option){
-            case 1 -> System.out.println("Realizar pedido");
-            case 2 -> System.out.println("Visualizar pedidos");
+            case 1 -> {
+                System.out.print("\nInsira o nome do cliente que deseja realizar o pedido: ");
+                String nomeCliente = scanner.next();
+
+                Cliente selecionado = null;
+                for (Cliente cliente : clienteList) {
+                    if (cliente.getNome().equals(nomeCliente)) {
+                        selecionado = cliente;
+                    }
+                }
+
+                if (selecionado == null) {
+                    System.out.println("\nNão existem clientes cadastrados com esse nome");
+                } else {
+                    System.out.print("\nQual a quantidade de produtos a serem adicionados? ");
+                    int quantidade = scanner.nextInt();
+                    List<Produto> produtoList = new ArrayList<>();
+                    for (int i = 0; i < quantidade; i++) {
+                        System.out.print("Nome do produto " + (i + 1) + ": ");
+                        String nomeProduto = scanner.next();
+
+                        System.out.print("Quantidade do produto " + (i + 1) + ": ");
+                        int quantidadeProduto = scanner.nextInt();
+
+                        System.out.print("Preço do produto " + (i + 1) + ": ");
+                        double preco = scanner.nextDouble();
+
+                        produtoList.add(new Produto(nomeProduto, quantidadeProduto, preco));
+                    }
+
+                    System.out.println("\nGostaria de finalizar o pedido agora?");
+                    System.out.println("1 - Sim");
+                    System.out.println("2 - Não");
+                    System.out.print("\nSelecione a opção desejada: ");
+                    boolean situacao = scanner.nextInt() == 1;
+
+                    pedidoList.add(new Pedido(produtoList, selecionado, situacao));
+                }
+            }
+            case 2 -> buscarPedidos(pedidoList);
             case 3 -> {}
-            default -> System.out.println("\nOpção inválida, tente novamente\n");
+            default -> System.out.println("\nOpção inválida, tente novamente1");
         }
     }
     public static void buscarPedidos(List<Pedido> pedidoList){

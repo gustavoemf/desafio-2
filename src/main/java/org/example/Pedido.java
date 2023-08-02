@@ -5,15 +5,15 @@ import java.util.List;
 public class Pedido {
     private List<Produto> produtos;
     private Cliente cliente;
-    private boolean finalizado;
+    private boolean situacao;
 
     public Pedido() {
     }
 
-    public Pedido(List<Produto> produtos, Cliente cliente, boolean finalizado) {
+    public Pedido(List<Produto> produtos, Cliente cliente, boolean situacao) {
         this.produtos = produtos;
         this.cliente = cliente;
-        this.finalizado = finalizado;
+        this.situacao = situacao;
     }
 
     public List<Produto> getProdutos() {
@@ -32,11 +32,11 @@ public class Pedido {
         this.cliente = cliente;
     }
 
-    public boolean isFinalizado() {
-        return finalizado;
+    public boolean isSituacao() {
+        return situacao;
     }
 
-    public void setFinalizado(boolean finalizado) {
-        this.finalizado = finalizado;
+    public void setSituacao(boolean situacao) {
+        this.situacao = situacao;
     }
 }
