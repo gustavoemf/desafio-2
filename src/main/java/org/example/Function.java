@@ -9,7 +9,7 @@ public class Function {
 
     public static int menu(List<Cliente> clienteList, List<Pedido> pedidoList){
         int option;
-        System.out.println("\t\tSISTEMA DE VENDAS");
+        System.out.println("\n\t\tSISTEMA DE VENDAS");
         System.out.println("1 - Clientes");
         System.out.println("2 - Pedidos");
         System.out.println("3 - Sair");
@@ -31,7 +31,7 @@ public class Function {
 
     public static void menuCliente(List<Cliente> clienteList){
         int option;
-        System.out.println("\t\tCLIENTES");
+        System.out.println("\n\t\tCLIENTES");
         System.out.println("1 - Cadastrar");
         System.out.println("2 - Buscar");
         System.out.println("3 - Editar");
@@ -41,7 +41,7 @@ public class Function {
 
         switch (option){
             case 1 -> {
-                System.out.print("Insira o nome do cliente: ");
+                System.out.print("\nInsira o nome do cliente: ");
                 String nomeCliente = scanner.next();
                 System.out.print("Insira a quantidade de endereços do cliente: ");
                 int quantEnderecos = scanner.nextInt();
@@ -59,19 +59,19 @@ public class Function {
             }
             case 2 -> {
                 if (clienteList.isEmpty()){
-                    System.out.println("Ainda não existem clientes cadastrados no sistema");
+                    System.out.println("\nAinda não existem clientes cadastrados no sistema\n");
                 } else {
-                    System.out.print("Insira o nome do cliente que deseja buscar: ");
+                    System.out.print("\nInsira o nome do cliente que deseja buscar: ");
                     String nomeCliente = scanner.next();
 
                     for (int i = 0; i < clienteList.size(); i++) {
                         if (clienteList.get(i).getNome().equals(nomeCliente)) {
-                            System.out.println("Nome: " + clienteList.get(i).getNome());
+                            System.out.println("\nNome: " + clienteList.get(i).getNome());
 
                             List<Endereco> enderecoList = clienteList.get(i).getEndereco();
-                            System.out.println("\tEndereços");
+                            System.out.println("Endereços:");
                             for (Endereco endereco : enderecoList) {
-                                System.out.print("Rua " + endereco.getRua() + ", " + endereco.getNumero() + "\n");
+                                System.out.print("\tRua " + endereco.getRua() + ", " + endereco.getNumero() + "\n");
                             }
                         } else {
                             System.out.println("Não existem clientes cadastrados com esse nome");
@@ -81,9 +81,9 @@ public class Function {
             }
             case 3 -> {
                 if (clienteList.isEmpty()){
-                    System.out.println("Ainda não existem clientes cadastrados no sistema");
+                    System.out.println("\nAinda não existem clientes cadastrados no sistema\n");
                 } else {
-                    System.out.print("Insira o nome do cliente que deseja editar: ");
+                    System.out.print("\nInsira o nome do cliente que deseja editar: ");
                     String nomeCliente = scanner.next();
 
                     for (int i = 0; i < clienteList.size(); i++) {
@@ -95,9 +95,9 @@ public class Function {
 
                             switch (optionEditar) {
                                 case 1 -> {
-                                    System.out.println("\tEdição de NOME");
+                                    System.out.println("\n\tEdição de NOME");
 
-                                    System.out.println("Insira o novo nome do cliente");
+                                    System.out.print("Insira o novo nome do cliente: ");
                                     String novoNome = scanner.next();
 
                                     clienteList.get(i).setNome(novoNome);
@@ -106,39 +106,43 @@ public class Function {
                                 }
 
                                 case 2 -> {
-                                    System.out.println("\tEdição de ENDEREÇO(S)");
+                                    System.out.println("\n\tEdição de ENDEREÇO(S)");
 
                                     for (int j = 0; j < clienteList.get(i).getEndereco().size(); j++) {
                                         System.out.println("\t" + (j + 1) + " - Rua " + clienteList.get(i).getEndereco().get(j).getRua() + ", " + clienteList.get(i).getEndereco().get(j).getNumero());
                                     }
-                                    System.out.print("Selecione qual endereço gostaria de editar: ");
+                                    System.out.print("\nSelecione qual endereço gostaria de editar: ");
                                     int endereco = scanner.nextInt();
 
-                                    System.out.print("Insira o novo nome da rua: ");
-                                    String rua = scanner.next();
+                                    if (endereco < 1 || endereco > clienteList.get(i).getEndereco().size()) {
+                                        System.out.println("Endereço selecionado inválido, tente novamente");
+                                    } else {
+                                        System.out.print("Insira o novo nome da rua: ");
+                                        String rua = scanner.next();
 
-                                    System.out.print("Insira o novo número da residência");
-                                    int numero = scanner.nextInt();
+                                        System.out.print("Insira o novo número da residência: ");
+                                        int numero = scanner.nextInt();
 
-                                    clienteList.get(i).getEndereco().get(endereco - 1).setRua(rua);
-                                    clienteList.get(i).getEndereco().get(endereco - 1).setNumero(numero);
+                                        clienteList.get(i).getEndereco().get(endereco - 1).setRua(rua);1
+                                        clienteList.get(i).getEndereco().get(endereco - 1).setNumero(numero);
 
-                                    System.out.println("Sucesso!");
+                                        System.out.println("Sucesso!");
+                                    }
                                 }
                             }
                         } else {
-                            System.out.println("Não existem clientes cadastrados com esse nome");
+                            System.out.println("\n\nNão existem clientes cadastrados com esse nome\n");
                         }
                     }
                 }
             }
-            case 4 -> System.out.println("Voltar");
+            case 4 -> {}
             default -> System.out.println("\nOpção inválida, tente novamente\n");
         }
     }
     public static void menuPedido(List<Cliente> clienteList, List<Pedido> pedidoList){
         int option;
-        System.out.println("\t\tPEDIDOS");
+        System.out.println("\n\t\tPEDIDOS");
         System.out.println("1 - Realizar pedido");
         System.out.println("2 - Visualizar pedidos");
         System.out.println("3 - Voltar");
@@ -148,7 +152,7 @@ public class Function {
         switch (option){
             case 1 -> System.out.println("Realizar pedido");
             case 2 -> System.out.println("Visualizar pedidos");
-            case 3 -> System.out.println("Voltar");
+            case 3 -> {}
             default -> System.out.println("\nOpção inválida, tente novamente\n");
         }
     }
