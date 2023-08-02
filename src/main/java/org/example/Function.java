@@ -179,8 +179,7 @@ public class Function {
 
                         produtoList.add(new Produto(nomeProduto, quantidadeProduto, preco));
                     }
-
-                    System.out.println("\nGostaria de finalizar o pedido agora?");
+                    System.out.println("\nO pedido foi encerrado?");
                     System.out.println("1 - Sim");
                     System.out.println("2 - Não");
                     System.out.print("\nSelecione a opção desejada: ");
@@ -198,11 +197,11 @@ public class Function {
         if (pedidoList.isEmpty()) {
             System.out.println("\nAinda não existem pedidos realizados no sistema");
         } else {
-            System.out.println("\n\t\tPedidos realizados:");
+            System.out.println("\n\t\tPedidos encerrados:");
 
             for (Pedido pedido : pedidoList) {
                 System.out.println("\nCliente: " + pedido.getCliente().getNome());
-                System.out.println("Situação do pedido: " + (pedido.isSituacao() ? "Finalizado" : "Não finalizado"));
+                System.out.println("Situação do pedido: " + (pedido.isSituacao() ? "Encerrado" : "Em atendimento"));
                 System.out.println("Produtos:");
                 for (Produto produto : pedido.getProdutos()) {
                     System.out.println("\tNome: " + produto.getNome() + " | Quantidade: " + produto.getQuantidade() + " | Preço: R$ " + produto.getPreco());
