@@ -195,6 +195,19 @@ public class Function {
         }
     }
     public static void buscarPedidos(List<Pedido> pedidoList){
+        if (pedidoList.isEmpty()) {
+            System.out.println("\nAinda não existem pedidos realizados no sistema");
+        } else {
+            System.out.println("\n\t\tPedidos realizados:");
 
+            for (Pedido pedido : pedidoList) {
+                System.out.println("\nCliente: " + pedido.getCliente().getNome());
+                System.out.println("Situação do pedido: " + (pedido.isSituacao() ? "Finalizado" : "Não finalizado"));
+                System.out.println("Produtos:");
+                for (Produto produto : pedido.getProdutos()) {
+                    System.out.println("\tNome: " + produto.getNome() + " | Quantidade: " + produto.getQuantidade() + " | Preço: R$ " + produto.getPreco());
+                }
+            }
+        }
     }
 }
